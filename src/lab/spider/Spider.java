@@ -58,6 +58,12 @@ public class Spider {
 	public void crawl(String beginningUrl) {
 		work.add(beginningUrl);
 		
+		while(work.size() > 0 && finished.size() < maxUrls) {
+			String next = work.poll();
+			processPage(next);
+			finished.add(next);
+		}
+		
 		// TODO: While there is remaining work and we haven't
 		// reach the maximum # of finished urls, process
 		// the next unfinshed url.  After processing, mark
@@ -73,6 +79,20 @@ public class Spider {
 	 */
 	public void processPage(String url) {
 		String html = helper.retrieve(url);
+		
+		if(html == null)
+			return;
+		
+		List<String> currentUrls = new LinkedList<String>(helper.extractLinks(url, html));
+		
+		for(String string : new ArrayList<String>(currentUrls)) {
+			if(work.contains(string) || finished.contains(string) || string.equals(url) || string.equals(url + "/"))
+				currentUrls.remove(string);
+			else
+				work.add(string);
+			
+			urlCounter.countWord(string);
+		}
 		
 		// TODO: extract all the links from the url
 		// For each link that isn't an image, increment the

@@ -10,14 +10,14 @@ package lab.spider;
  *
  */
 public class RunSpider {
-	private static final String BEGINNING_URL = "http://www.macalester.edu";
+	private static final String BEGINNING_URL = "http://www.dailypaul.com/";
 
 	/**
 	 * Run the spider program.
 	 * @param args
 	 */
 	public static void main(String [] args) {
-		Spider spider = new Spider(10);
+		Spider spider = new Spider(100);
 		spider.crawl(BEGINNING_URL);
 		for (WordCount urlCount : spider.getUrlCounts()) {
 			println("url " + urlCount.getWord() + " is " + urlCount.getCount());

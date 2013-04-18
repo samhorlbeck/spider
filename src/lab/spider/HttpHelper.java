@@ -31,7 +31,7 @@ public class HttpHelper {
 			return result.toString();
 		} catch (IOException e) {
 			System.err.println("http fetch of '" + urlStr + "' failed");
-			e.printStackTrace();
+			//e.printStackTrace();
 			return null;
 		}
 	}
